@@ -80,7 +80,7 @@ public class CountlyCordova extends CordovaPlugin {
         }
 
         else if ("askForNotificationPermission".equals(action)) {
-            callbackContext.success(countlyNative.askForNotificationPermission(args));
+//            callbackContext.success(countlyNative.askForNotificationPermission(args));
         } else if ("registerForNotification".equals(action)) {
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
