@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -790,6 +791,8 @@ public class CountlyNative {
                     .getValueForKey(args.getString(0)).toString();
         } catch (JSONException jsonException) {
             return jsonException.toString();
+        } catch (NullPointerException exception) {
+            return null;
         }
     }
 
