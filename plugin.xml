@@ -127,7 +127,8 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest">
-        <uses-permission android:name="android.permission.INTERNET"/>
+      <uses-permission android:name="android.permission.INTERNET"/>
+      <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     </config-file>
 
     <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
