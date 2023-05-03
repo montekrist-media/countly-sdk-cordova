@@ -8,7 +8,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
-//import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -292,7 +292,7 @@ public class CountlyNative {
         }
     }
 
-  /**  public String askForNotificationPermission(JSONArray args) {
+    public String askForNotificationPermission(JSONArray args) {
         this.log("askForNotificationPermission", args);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelName = "General Notifications";
@@ -318,7 +318,7 @@ public class CountlyNative {
                     CountlyPush.onTokenRefresh(token);
                 });
         return "askForNotificationPermission";
-    } */
+    }
 
     public String registerForNotification(JSONArray args, final Callback theCallback) {
         notificationListener = theCallback;
