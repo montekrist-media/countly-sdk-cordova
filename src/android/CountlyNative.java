@@ -6,9 +6,12 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import androidx.annotation.NonNull;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -307,16 +310,37 @@ public class CountlyNative {
             }
         }
         CountlyPush.init(activity.getApplication(), pushTokenTypeVariable);
-        FirebaseApp.initializeApp(context);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        log("getInstanceId failed", task.getException(), LogLevel.WARNING);
-                        return;
-                    }
-                    String token = task.getResult().getToken();
-                    CountlyPush.onTokenRefresh(token);
-                });
+        try {
+          FirebaseApp.initializeApp(context);
+
+          FirebaseMessaging firebaseMessagingInstance = FirebaseMessaging.getInstance();
+          if (firebaseMessagingInstance == null) {
+              log("askForNotificationPermission, firebaseMessagingInstance is null", LogLevel.WARNING);
+              return "askForNotificationPermission, firebaseMessagingInstance is null";
+          }
+          Task<String> firebaseMessagingTokenTask = firebaseMessagingInstance.getToken();
+          if (firebaseMessagingTokenTask == null) {
+              log("askForNotificationPermission, firebaseMessagingTokenTask is null", LogLevel.WARNING);
+              return "askForNotificationPermission, firebaseMessagingTokenTask is null";
+          }
+
+          firebaseMessagingTokenTask.addOnCompleteListener(new OnCompleteListener<String>() {
+              @Override
+              public void onComplete(@NonNull Task<String> task) {
+                  if (!task.isSuccessful()) {
+                      log("askForNotificationPermission, Fetching FCM registration token failed", task.getException(), LogLevel.WARNING);
+                      return;
+                  }
+
+                  // Get new FCM registration token
+                  String token = task.getResult();
+                  CountlyPush.onTokenRefresh(token);
+              }
+          });
+
+        } catch (Exception exception) {
+          return exception.toString();
+        }
         return "askForNotificationPermission";
     }
 
