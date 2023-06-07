@@ -145,7 +145,7 @@
 
     <source-file src="src/android/CountlyCordova.java" target-dir="src/ly/count/android/sdk"/>
     <source-file src="src/android/CountlyNative.java" target-dir="src/ly/count/android/sdk"/>
-    <framework src="ly.count.android:sdk:22.06.2" />
+    <framework src="ly.count.android:sdk:22.09.4" />
 
     <!-- Push notification -->
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -162,7 +162,7 @@
         <permission android:name="${applicationId}.CountlyPush.BROADCAST_PERMISSION" android:protectionLevel="signature" />
     </config-file>
     <!-- if any version higher than 18.0.0 is used then it forces AndroidX -->
-    <framework src="com.google.firebase:firebase-messaging:18.0.0" />
+    <framework src="com.google.firebase:firebase-messaging:23.1.2" />
     <source-file src="src/android/CountlyMessagingService.java" target-dir="src/ly/count/android/sdk"/>
   </platform>
 
